@@ -1,0 +1,42 @@
+PKILL
+
+by Colin Woodbury <colingw AT gmail>
+
+ABOUT PKILL
+-----------
+Don't feel like fiddling around with grep and kill to stop that runaway
+process that isn't acting the way it should?
+With pkill, you can kill it by name!
+
+pkill iTunes   # Bye bye iTunes!
+pkill Firefox  # Bye bye Firefox!
+
+Need more power? Force the kill!
+
+pkill -f Firefox  # Someone was being a bad boy.
+
+REQUIREMENTS
+------------
+pkill is a python script that is compatible from 2.6 upwards through 3.2.
+To run it, you'll need to be using Linux, OSX, or Cygwin in Windows.
+
+cygwin: http://cygwin.com/
+
+INSTALLING PKILL
+----------------
+Download the source, and place it whereever you like.
+Then, in either your .bash_profile (mac) or .bashrc (Linux),
+add something like:
+
+alias pkill="python ~/path/to/pkill/pkill.py"
+
+Save, and close the Terminal window, and open a new one. You're ready
+to use pkill!
+
+RUNNING PKILL
+-------------
+No matter where you are in your shell, just type:
+
+pkill name-of-naughty-process
+
+and all will be taken care of!
