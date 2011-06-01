@@ -2,8 +2,17 @@
 # author:  Colin Woodbury
 # contact: colingw AT gmail
 # about:   Kills a given program name, if it can.
-#          Accepts '-f' as a flag to send a -9 KILL signal instead of the  
-#          safer -15 TERM signal.
+#
+# options:
+#  -1  Hang up the program.
+#  -2  Interrupt the program.
+#  -3  Quit.
+#  -6  Abort.
+#  -9  Kill (non-catchable, non-ignorable kill)
+#  -14 Alarm clock.
+#  -15 Software termination signal. The 'safe' kill.  
+
+# BUGS: Make pkill non-case-sensative.
 
 import subprocess
 import sys
@@ -15,19 +24,22 @@ def get_args():
     if not 1 < len(sys.argv) < 4:
         print('Bad args ->', sys.argv)
         return
-    signal = '-15'  # Send the software termination signal by default.
-    process = sys.argv[1]  # The first given arg must be a process name.
-    if len(sys.argv) > 2 and '-f' in sys.argv: # Possible flag given.
-        pos = sys.argv.index('-f')
-        signal = '-9'  # Kill the fucker.
-        process = sys.argv[-pos]
+    signals = ('-1', '-2', '-3', '-6', '-9', '-14', '-15')
+    signal  = '-15'  # Send the software termination signal by default.
+    process = sys.argv[1]  # By default, there is no signal given.
+    if len(sys.argv) > 2:
+        process = sys.argv[2]
+        if sys.argv[1] in signals:
+            signal  = sys.argv[1]
+        else:
+            print('{} is not a valid signal. Using -15.'.format(sys.argv[1]))
     return (process, signal)
 
 args = get_args()    
 if args:
     process = args[0]
-    signal = args[1]
-    pid = None
+    signal  = args[1]
+    pid     = None
     pidList = subprocess.getoutput('ps -A | grep {0}'.format(process))
     for line in pidList.split('\n'):
         if re.search('/{0}'.format(process), line):

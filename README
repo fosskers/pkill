@@ -13,7 +13,10 @@ pkill Firefox  # Bye bye Firefox!
 
 Need more power? Force the kill!
 
-pkill -f Firefox  # Someone was being a bad boy.
+pkill -9 Firefox  # Someone was being a bad boy.
+
+pkill accepts all the numbered signals that the native 'kill'
+command does. 
 
 REQUIREMENTS
 ------------
@@ -37,6 +40,6 @@ RUNNING PKILL
 -------------
 No matter where you are in your shell, just type:
 
-pkill name-of-naughty-process
+pkill (optional-term-signal) name-of-naughty-process
 
 and all will be taken care of!
